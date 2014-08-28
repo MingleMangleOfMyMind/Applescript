@@ -1,0 +1,29 @@
+-- This part is ignort in Hazel, so don't bother with it.
+set theFile to choose file
+hazelMatchFile(theFile)
+-- The above part doesn't matter in Hazel
+
+on hazelMatchFile(theFile)
+	
+	set sizeList to {16, 19, 32, 48, 64, 96, 128}
+	
+	tell application "Image Events"
+		launch
+		set my_image to open theFile
+		set my_dimensions to dimensions of my_image
+		close my_image
+		set my_x to item 1 of my_dimensions as integer
+		set my_y to item 2 of my_dimensions as integer
+		quit
+	end tell
+	
+	if (my_x = my_y) then
+		repeat with size in sizeList
+			if (my_x = size as integer) then
+				return true
+			end if
+		end repeat
+	end if
+	return false
+	
+end hazelMatchFile
